@@ -22,19 +22,8 @@ class UpdatePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string',
-            'body' => 'required|string',
-            'author_id' => 'required|exists:users,id',
+            'title' => 'nullable|string|min:3|max:255',
+            'body' => 'nullable|string|min:10',
         ];
-    }
-
-    /**
-     * Prepare the data for validation.
-     */
-    public function prepareForValidation(): void
-    {
-        $this->merge([
-            'author_id' => $this->input('author'),
-        ]);
     }
 }
