@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
+use App\Http\Resources\PostResource;
 use App\Models\Post;
-use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
@@ -12,15 +14,17 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        return PostResource::collection(Post::all());
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
-        //
+        return new PostResource(
+            Post::create($request->validated())
+        );
     }
 
     /**
@@ -28,15 +32,17 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return new PostResource($post);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Post $post)
+    public function update(UpdatePostRequest $request, Post $post)
     {
-        //
+        $post->update($request->validated());
+
+        return new PostResource($post);
     }
 
     /**
@@ -44,6 +50,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+
+        return response()->noContent();
     }
 }

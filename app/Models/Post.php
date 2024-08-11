@@ -26,6 +26,10 @@ class Post extends Model
      */
     public function author(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'author_id');
+        return $this->belongsTo(User::class, 'author_id')
+            ->withDefault([
+                'name' => __('Undefined'),
+                'email' => __('Undefined'),
+            ]);
     }
 }
