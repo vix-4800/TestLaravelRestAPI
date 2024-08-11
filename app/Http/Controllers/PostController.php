@@ -6,16 +6,21 @@ use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
+use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $sortColumn = $request->input('sort', 'id');
+        $sortDirection = $request->input('order', 'asc');
+
         return PostResource::collection(
-            Post::paginate(10)
+            Post::orderBy($sortColumn, $sortDirection)
+                ->paginate(10)
         );
     }
 
