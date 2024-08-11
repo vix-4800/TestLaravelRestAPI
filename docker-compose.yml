@@ -105,7 +105,7 @@ services:
         image: redislabs/redisinsight:latest
         restart: always
         ports:
-            - "${REDISINSIGHT_PORT:-8083}:5540"
+            - "${REDISINSIGHT_PORT:-5540}:5540"
         networks:
             - laravel_app
         depends_on:
@@ -116,7 +116,7 @@ services:
         image: mailhog/mailhog
         ports:
             - "1025:1025"
-            - "${MAILHOG_PORT:-8082}:8025"
+            - "${MAILHOG_PORT:-8025}:8025"
         networks:
             - laravel_app
 

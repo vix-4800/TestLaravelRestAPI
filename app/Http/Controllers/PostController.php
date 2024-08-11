@@ -6,6 +6,7 @@ use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -16,11 +17,25 @@ class PostController extends Controller
     public function index(Request $request)
     {
         $sortColumn = $request->input('sort', 'id');
-        $sortDirection = $request->input('order', 'asc');
+        $sortDirection = $request->input('order') === 'desc' ? 'desc' : 'asc';
+
+        $query = Post::query()
+            ->orderBy($sortColumn, $sortDirection)
+            ->when($request->filled('title'), function (Builder $query) use ($request) {
+                $query->where('title', 'like', '%'.$request->input('title').'%');
+            })
+            ->when($request->filled('body'), function (Builder $query) use ($request) {
+                $query->where('body', 'like', '%'.$request->input('body').'%');
+            })
+            ->when($request->filled('author') && is_numeric($request->input('author')), function (Builder $query) use ($request) {
+                $query->where('author_id', $request->input('author'));
+            })
+            ->when($request->filled('created_at'), function (Builder $query) use ($request) {
+                $query->whereDate('created_at', $request->input('created_at'));
+            });
 
         return PostResource::collection(
-            Post::orderBy($sortColumn, $sortDirection)
-                ->paginate(10)
+            $query->paginate(10)
         );
     }
 
