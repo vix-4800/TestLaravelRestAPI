@@ -2,7 +2,9 @@
 
 ## Установка
 
-1. После клонирования репозитория, установите приложение. Для этого можно воспользовать командной строкой или `make` файлом. В первом случае выполните команду:
+1. После клонирования репозитория, установите приложение. Для этого можно воспользоваться `docker` командой или `make` файлом
+
+В первом случае выполните команду:
 
 ```bash
 docker run --rm -v $(pwd):/var/www/html -w /var/www/html composer:latest composer install --ignore-platform-reqs --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
@@ -14,7 +16,7 @@ docker run --rm -v $(pwd):/var/www/html -w /var/www/html composer:latest compose
 make install
 ```
 
-2. После клонирования репозитория, настройте `.env` файл. Для этого:
+2. Настройте `.env` файл, для этого:
 
     1. Скопируйте содержимое `.env.example` в `.env`
 
@@ -62,11 +64,11 @@ make post-install
 -   `make migrate` - запустить миграции
 -   `make seed` - запустить сиды
 -   `make pint` - запустить Laravel Pint
--   `make larastan` - запустить Laravel Stan
+-   `make larastan` - запустить Larastan
 
 ## Логирование запросов
 
-В приложении настроено логирование запросов в локальном окружении. Для этого был создан и зарегестрирован сервис-провайдер - `QueryLoggerServiceProvider`. Все логи записываются в файл `storage/logs/database_monitoring.log`
+В приложении настроено логирование SQL запросов в локальном окружении. Для этого был создан и зарегестрирован сервис-провайдер - `QueryLoggerServiceProvider`. Все логи записываются в файл `storage/logs/database_monitoring.log`
 
 Для отключения логирования в локальном окружении можно добавить параметр `LOG_DATABASE_QUERIES` в `.env` файл и установить значение на `false` _(потребуется перезапустить приложение)_
 
