@@ -48,6 +48,8 @@ namespace App\Models{
  * @property string|null $remember_token
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\UserActivity> $activities
+ * @property-read int|null $activities_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Post> $posts
@@ -68,5 +70,33 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  */
 	class User extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
+ * @property int $user_id
+ * @property string $url
+ * @property string $method
+ * @property int $response_code
+ * @property string $ip_address
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder|UserActivity newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|UserActivity newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|UserActivity query()
+ * @method static \Illuminate\Database\Eloquent\Builder|UserActivity whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserActivity whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserActivity whereIpAddress($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserActivity whereMethod($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserActivity whereResponseCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserActivity whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserActivity whereUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserActivity whereUserId($value)
+ */
+	class UserActivity extends \Eloquent {}
 }
 
