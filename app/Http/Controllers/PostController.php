@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Events\PostCreated;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Http\Resources\PostResource;
@@ -34,8 +35,12 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
+        $post = Post::create($request->validated());
+
+        event(new PostCreated($post));
+
         return new PostResource(
-            Post::create($request->validated())
+            $post
         );
     }
 
