@@ -16,4 +16,4 @@ logs:
 	docker compose logs -f
 
 shell:
-	docker exec -it laravel_supervisor sh
+	docker exec -it laravel_php /bin/bash
