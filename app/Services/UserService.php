@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Cache;
 class UserService
 {
     /**
-     * Clears the cache for users.
+     * Clear the cache for users.
      */
     public function clearCache(string $key = 'users'): void
     {
