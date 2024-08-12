@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Models\Post;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class PostService
 {
@@ -18,25 +18,40 @@ class PostService
         //
     }
 
+    /**
+     * Get a paginated list of posts, applying filters and sorting as needed.
+     */
     public function index(Request $request)
     {
-        $sortColumn = $request->input('sort', 'id');
-        $sortDirection = $request->input('order') === 'desc' ? 'desc' : 'asc';
+        $cacheKey = 'posts_'.md5(implode('|', $request->except('page')));
 
-        return Post::query()
-            ->orderBy($sortColumn, $sortDirection)
-            ->when($request->filled('title'), function (Builder $query) use ($request) {
+        return Cache::remember($cacheKey, now()->addMinutes(5), function () use ($request) {
+            $query = Post::query();
+
+            if ($request->filled('title')) {
                 $query->where('title', 'like', '%'.$request->input('title').'%');
-            })
-            ->when($request->filled('body'), function (Builder $query) use ($request) {
+            }
+
+            if ($request->filled('body')) {
                 $query->where('body', 'like', '%'.$request->input('body').'%');
-            })
-            ->when($request->filled('author') && is_numeric($request->input('author')), function (Builder $query) use ($request) {
+            }
+
+            if ($request->filled('author') && is_numeric($request->input('author'))) {
                 $query->where('author_id', $request->input('author'));
-            })
-            ->when($request->filled('created_at'), function (Builder $query) use ($request) {
+            }
+
+            if ($request->filled('created_at')) {
                 $query->whereDate('created_at', $request->input('created_at'));
-            })
-            ->paginate(10);
+            }
+
+            $query->orderBy($request->input('sort', 'id'), $request->input('order', 'asc'))
+                ->when($request->filled('title') || $request->filled('body') || $request->filled('author') || $request->filled('created_at'), function ($query) {
+                    $query->orderBy('id');
+                });
+
+            $posts = $query->paginate(10);
+
+            return $posts;
+        });
     }
 }
