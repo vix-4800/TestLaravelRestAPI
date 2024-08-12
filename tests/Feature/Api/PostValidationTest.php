@@ -16,14 +16,6 @@ class PostValidationTest extends TestCase
 
     private User $user;
 
-    private array $postCollectionStructure = [
-        'id',
-        'title',
-        'body',
-        'author',
-        'created_at',
-    ];
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -54,6 +46,7 @@ class PostValidationTest extends TestCase
         ];
 
         $this->postJson(route('posts.store'), $data)
+            ->assertUnprocessable()
             ->assertJsonValidationErrors([
                 'title',
                 'body',
@@ -69,6 +62,7 @@ class PostValidationTest extends TestCase
         ];
 
         $this->putJson(route('posts.update', ['post' => 1]), $data)
+            ->assertUnprocessable()
             ->assertJsonValidationErrors([
                 'title',
                 'body',
