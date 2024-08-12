@@ -10,8 +10,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('posts', PostController::class)->except(['create', 'edit']);
 });
 
-Route::controller(AuthController::class)->group(function () {
-    Route::post('login', 'login');
-    Route::post('register', 'register');
-    Route::post('reset-password', 'resetPassword');
+Route::controller(AuthController::class)->name('auth.')->group(function () {
+    Route::post('login', 'login')->name('login');
+    Route::post('register', 'register')->name('register');
+    Route::post('reset-password', 'resetPassword')->name('reset-password');
 });

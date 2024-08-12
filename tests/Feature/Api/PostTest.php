@@ -1,10 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api;
 
+use App\Mail\PostCreated;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
 class PostTest extends TestCase
@@ -56,6 +60,8 @@ class PostTest extends TestCase
 
     public function test_api_posts_store_request_is_successful(): void
     {
+        Mail::fake();
+
         $data = [
             'title' => $this->faker->sentence,
             'body' => $this->faker->paragraph,
@@ -67,6 +73,10 @@ class PostTest extends TestCase
             ->assertJsonStructure([
                 'data' => $this->postCollectionStructure,
             ]);
+
+        Mail::assertQueued(PostCreated::class, function ($mail) {
+            return $mail->hasTo($this->user->email);
+        });
     }
 
     public function test_api_posts_show_request_is_successful(): void
