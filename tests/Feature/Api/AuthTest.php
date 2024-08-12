@@ -80,4 +80,43 @@ class AuthTest extends TestCase
             return $mail->hasTo($user->email);
         });
     }
+
+    public function test_login_request_fails_for_non_existing_user(): void
+    {
+        $data = [
+            'email' => $this->faker->email,
+            'password' => $this->faker->password,
+        ];
+
+        $this->postJson(route('auth.login'), $data)
+            ->assertUnprocessable()
+            ->assertJsonValidationErrors(['email']);
+    }
+
+    public function test_register_request_validation(): void
+    {
+        $data = [
+            'name' => $this->faker->randomLetter,
+            'email' => $this->faker->sentence,
+        ];
+
+        $this->postJson(route('auth.register'), $data)
+            ->assertUnprocessable()
+            ->assertJsonValidationErrors([
+                'name',
+                'email',
+            ]);
+    }
+
+    public function test_post_resource_is_not_accessible_for_unauthorized_users(): void
+    {
+        $this->postJson(route('posts.index'))
+            ->assertUnauthorized();
+    }
+
+    public function test_users_resource_is_not_accessible_for_unauthorized_users(): void
+    {
+        $this->getJson(route('users.index'))
+            ->assertUnauthorized();
+    }
 }
