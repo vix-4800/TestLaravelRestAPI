@@ -50,7 +50,7 @@ class PostTest extends TestCase
         $this->actingAs($this->user);
     }
 
-    public function test_api_posts_index_request_is_successful(): void
+    public function test_index_request_is_successful(): void
     {
         $this->getJson(route('posts.index'))
             ->assertOk()
@@ -61,7 +61,7 @@ class PostTest extends TestCase
             ]);
     }
 
-    public function test_api_posts_store_request_is_successful(): void
+    public function test_store_request_is_successful(): void
     {
         $data = [
             'title' => $this->faker->sentence,
@@ -76,7 +76,7 @@ class PostTest extends TestCase
             ]);
     }
 
-    public function test_after_api_posts_store_request_email_is_sent(): void
+    public function test_after_store_request_email_is_sent(): void
     {
         Mail::fake();
 
@@ -103,7 +103,7 @@ class PostTest extends TestCase
         );
     }
 
-    public function test_api_posts_show_request_is_successful(): void
+    public function test_show_request_is_successful(): void
     {
         $this->getJson(route('posts.show', ['post' => 1]))
             ->assertOk()
@@ -112,7 +112,7 @@ class PostTest extends TestCase
             ]);
     }
 
-    public function test_api_posts_update_request_is_successful(): void
+    public function test_update_request_is_successful(): void
     {
         $data = [
             'title' => $this->faker->sentence,
@@ -126,7 +126,7 @@ class PostTest extends TestCase
             ]);
     }
 
-    public function test_api_posts_delete_request_is_successful(): void
+    public function test_delete_request_is_successful(): void
     {
         $this->deleteJson(route('posts.destroy', ['post' => 1]))
             ->assertNoContent();

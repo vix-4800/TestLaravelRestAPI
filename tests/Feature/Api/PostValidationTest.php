@@ -38,7 +38,7 @@ class PostValidationTest extends TestCase
         $this->actingAs($this->user);
     }
 
-    public function test_api_posts_store_request_validation(): void
+    public function test_store_request_validation(): void
     {
         $data = [
             'title' => $this->faker->randomLetter,
@@ -54,7 +54,7 @@ class PostValidationTest extends TestCase
             ]);
     }
 
-    public function test_api_posts_update_request_validation(): void
+    public function test_update_request_validation(): void
     {
         $data = [
             'title' => $this->faker->randomLetter,
@@ -67,5 +67,23 @@ class PostValidationTest extends TestCase
                 'title',
                 'body',
             ]);
+    }
+
+    public function test_show_non_existing_post_request_fails(): void
+    {
+        $this->getJson(route('posts.show', ['post' => 999]))
+            ->assertNotFound();
+    }
+
+    public function test_update_non_existing_post_request_fails(): void
+    {
+        $this->putJson(route('posts.update', ['post' => 999]))
+            ->assertNotFound();
+    }
+
+    public function test_delete_non_existing_post_request_fails(): void
+    {
+        $this->deleteJson(route('posts.destroy', ['post' => 999]))
+            ->assertNotFound();
     }
 }

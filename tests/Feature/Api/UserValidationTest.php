@@ -61,24 +61,19 @@ class UserValidationTest extends TestCase
             ]);
     }
 
-    public function test_show_non_existing_users_request(): void
+    public function test_show_non_existing_user_request_fails(): void
     {
         $this->getJson(route('users.show', ['user' => 999]))
             ->assertNotFound();
     }
 
-    public function test_update_non_existing_users_request(): void
+    public function test_update_non_existing_user_request_fails(): void
     {
-        $data = [
-            'name' => $this->faker->name,
-            'email' => $this->faker->email,
-        ];
-
-        $this->putJson(route('users.update', ['user' => 999]), $data)
+        $this->putJson(route('users.update', ['user' => 999]))
             ->assertNotFound();
     }
 
-    public function test_delete_non_existing_users_request(): void
+    public function test_delete_non_existing_user_request_fails(): void
     {
         $this->deleteJson(route('users.destroy', ['user' => 999]))
             ->assertNotFound();

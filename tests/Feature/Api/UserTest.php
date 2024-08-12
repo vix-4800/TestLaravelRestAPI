@@ -37,7 +37,7 @@ class UserTest extends TestCase
         $this->actingAs($user);
     }
 
-    public function test_api_users_index_request_is_successful(): void
+    public function test_index_request_is_successful(): void
     {
         $this->getJson(route('users.index'))
             ->assertOk()
@@ -46,7 +46,7 @@ class UserTest extends TestCase
             ]);
     }
 
-    public function test_api_users_store_request_is_successful(): void
+    public function test_store_request_is_successful(): void
     {
         $data = [
             'name' => $this->faker->name,
@@ -61,7 +61,7 @@ class UserTest extends TestCase
             ]);
     }
 
-    public function test_api_users_show_request_is_successful(): void
+    public function test_show_request_is_successful(): void
     {
         $this->getJson(route('users.show', ['user' => 1]))
             ->assertOk()
@@ -70,7 +70,7 @@ class UserTest extends TestCase
             ]);
     }
 
-    public function test_api_users_update_request_is_successful(): void
+    public function test_update_request_is_successful(): void
     {
         $data = [
             'name' => $this->faker->name,
@@ -84,7 +84,7 @@ class UserTest extends TestCase
             ]);
     }
 
-    public function test_api_users_delete_request_is_successful(): void
+    public function test_delete_request_is_successful(): void
     {
         $this->deleteJson(route('users.destroy', ['user' => 1]))
             ->assertNoContent();
