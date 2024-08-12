@@ -24,9 +24,6 @@ services:
         build:
             context: ./docker/php
             dockerfile: Dockerfile
-            args:
-                - "UID=${UID:-1000}"
-                - "GID=${GID:-1000}"
         volumes:
             - "./:/var/www/html"
         restart: unless-stopped
@@ -40,6 +37,18 @@ services:
         depends_on:
             - mysql
             - redis
+
+    supervisor:
+        container_name: laravel_supervisor
+        build:
+            context: ./docker/supervisor
+            dockerfile: Dockerfile
+        volumes:
+            - "./:/var/www/html"
+            - "./docker/supervisor/supervisord.conf:/etc/supervisor/supervisord.conf"
+        restart: unless-stopped
+        networks:
+            - laravel_app
 
     mysql:
         container_name: laravel_mysql
@@ -89,7 +98,7 @@ services:
         ports:
             - "${REDIS_PORT:-6379}:6379"
         volumes:
-            - "sail-redis:/data"
+            - "laravel-redis:/data"
         networks:
             - laravel_app
         healthcheck:
@@ -127,5 +136,5 @@ networks:
 volumes:
     laravel-mysql:
         driver: local
-    sail-redis:
+    laravel-redis:
         driver: local
