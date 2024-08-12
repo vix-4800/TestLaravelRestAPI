@@ -8,13 +8,20 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
 
 class UserController extends Controller
 {
+    public function __construct(
+        private readonly UserService $service
+    ) {
+        //
+    }
+
     /**
-     * Display a listing of the resource.
+     * Returns a collection of all users.
      */
     public function index()
     {
@@ -28,7 +35,7 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request): UserResource
     {
-        $this->clearCache();
+        $this->service->clearCache();
 
         return new UserResource(
             User::create($request->validated())
@@ -50,7 +57,7 @@ class UserController extends Controller
     {
         $user->update($request->validated());
 
-        $this->clearCache();
+        $this->service->clearCache();
 
         return new UserResource($user);
     }
@@ -62,16 +69,8 @@ class UserController extends Controller
     {
         $user->delete();
 
-        $this->clearCache();
+        $this->service->clearCache();
 
         return response()->noContent();
-    }
-
-    /**
-     * Clears the cache for users.
-     */
-    private function clearCache(): void
-    {
-        Cache::forget('users');
     }
 }
