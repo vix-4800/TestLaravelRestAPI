@@ -6,4 +6,4 @@ RUN apk update && apk add --no-cache supervisor
 
 RUN mkdir -p "/etc/supervisor/logs"
 
-CMD ["/usr/bin/supervisord", "-n", "-c",  "/etc/supervisor/supervisord.conf"]
+CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisor/supervisord.conf"]

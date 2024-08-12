@@ -16,8 +16,7 @@ services:
         depends_on:
             - mysql
             - redis
-        links:
-            - "php-fpm"
+            - php-fpm
 
     php-fpm:
         container_name: laravel_php
@@ -31,9 +30,6 @@ services:
         working_dir: /var/www/html
         networks:
             - laravel_app
-        links:
-            - mysql
-            - redis
         depends_on:
             - mysql
             - redis
@@ -87,8 +83,6 @@ services:
             - "${PHPMYADMIN_PORT:-8081}:80"
         networks:
             - laravel_app
-        links:
-            - mysql
         depends_on:
             - mysql
 

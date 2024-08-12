@@ -12,6 +12,8 @@ class Post extends Model
 {
     use HasFactory;
 
+    protected $with = ['author'];
+
     /**
      * The attributes that are mass assignable.
      *

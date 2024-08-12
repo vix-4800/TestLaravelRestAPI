@@ -15,7 +15,7 @@ class QueryLoggerServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        if ($this->app->environment('local')) {
+        if ($this->app->environment('local') && env('LOG_DATABASE_QUERIES', true)) {
             DB::listen(function ($query) {
                 Log::channel('database_monitoring')->info(
                     $query->sql,
