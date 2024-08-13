@@ -86,7 +86,9 @@ class UserTest extends TestCase
 
     public function test_delete_request_is_successful(): void
     {
-        $this->deleteJson(route('users.destroy', ['user' => 1]))
+        $user = User::factory()->create();
+
+        $this->deleteJson(route('users.destroy', ['user' => $user->id]))
             ->assertNoContent();
     }
 }

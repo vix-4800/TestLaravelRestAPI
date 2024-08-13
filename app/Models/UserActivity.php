@@ -30,6 +30,16 @@ class UserActivity extends Model
     ];
 
     /**
+     * Sets the method attribute for the UserActivity model.
+     *
+     * @param  string  $value  The method to be set.
+     */
+    public function setMethodAttribute(string $value): void
+    {
+        $this->attributes['method'] = strtoupper($value);
+    }
+
+    /**
      * Get the user for the activity.
      *
      * @return BelongsTo The user for the activity.
@@ -84,5 +94,27 @@ class UserActivity extends Model
     public function scopeForLastMonth(Builder $query): Builder
     {
         return $query->forLastDays(30);
+    }
+
+    /**
+     * Scope a query to only include successful records.
+     *
+     * @param  Builder  $query  The query builder instance.
+     * @return Builder The modified query builder instance.
+     */
+    public function scopeSuccessful(Builder $query): Builder
+    {
+        return $query->whereBetween('response_code', [200, 299]);
+    }
+
+    /**
+     * Scope a query to only include records with a response code outside the range of 200 to 299.
+     *
+     * @param  Builder  $query  The query builder instance.
+     * @return Builder The modified query builder instance.
+     */
+    public function scopeFailed(Builder $query): Builder
+    {
+        return $query->whereNotBetween('response_code', [200, 299]);
     }
 }

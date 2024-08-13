@@ -55,10 +55,7 @@ class UserActivity extends Command implements PromptsForMissingInput
         $directoryPath = storage_path("activity-reports/{$userId}");
 
         if (! file_exists($directoryPath)) {
-            if (! mkdir($directoryPath, 0755, true)) {
-                $this->error('Unable to create directory.');
-                return;
-            }
+            mkdir($directoryPath, 0755, true);
         }
 
         $filePath = "{$directoryPath}/report_{$timestamp}.csv";
@@ -71,9 +68,8 @@ class UserActivity extends Command implements PromptsForMissingInput
     /**
      * Writes the given user activities to a CSV file.
      *
-     * @param string $filePath The path to the CSV file to be generated.
-     * @param array|Collection $activities A collection of user activities to be written to the CSV file.
-     * @return void
+     * @param  string  $filePath  The path to the CSV file to be generated.
+     * @param  array|Collection  $activities  A collection of user activities to be written to the CSV file.
      */
     private function writeActivitiesToCsv(string $filePath, array|Collection $activities): void
     {
