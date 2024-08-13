@@ -20,13 +20,15 @@ class LogUserActivity
     {
         $response = $next($request);
 
-        event(new UserActivityLogged(
-            $request->user(),
-            $request->path(),
-            $request->method(),
-            $response->status(),
-            $request->ip(),
-        ));
+        if (env('LOG_USER_ACTIVITY', true)) {
+            event(new UserActivityLogged(
+                $request->user(),
+                $request->path(),
+                $request->method(),
+                $response->status(),
+                $request->ip(),
+            ));
+        }
 
         return $response;
     }
