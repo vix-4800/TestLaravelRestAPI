@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
+use App\Enums\RequestMethod;
 use App\Events\UserActivityLogged;
 use Closure;
 use Illuminate\Http\Request;
@@ -24,7 +25,7 @@ class LogUserActivity
             event(new UserActivityLogged(
                 $request->user(),
                 $request->path(),
-                $request->method(),
+                RequestMethod::from($request->method()),
                 $response->status(),
                 $request->ip(),
             ));

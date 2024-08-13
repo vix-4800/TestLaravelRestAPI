@@ -15,11 +15,23 @@ namespace App\Models{
 /**
  * 
  *
- * @property-read \App\Models\User|null $author
+ * @property int $id
+ * @property string $title
+ * @property string $body
+ * @property int $author_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\User $author
  * @method static \Database\Factories\PostFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Post newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Post newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Post query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Post whereAuthorId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Post whereBody($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Post whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Post whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Post whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Post whereUpdatedAt($value)
  */
 	class Post extends \Eloquent {}
 }
@@ -28,7 +40,14 @@ namespace App\Models{
 /**
  * 
  *
+ * @property int $id
+ * @property string $name
+ * @property string $email
+ * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property mixed $password
+ * @property string|null $remember_token
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\UserActivity> $activities
  * @property-read int|null $activities_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
@@ -41,6 +60,14 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User query()
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereEmailVerifiedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User wherePassword($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  */
 	class User extends \Eloquent {}
 }
@@ -49,8 +76,15 @@ namespace App\Models{
 /**
  * 
  *
- * @property-write mixed $method
- * @property-read \App\Models\User|null $user
+ * @property int $id
+ * @property int $user_id
+ * @property string $url
+ * @property \App\Enums\RequestMethod $method
+ * @property int $response_code
+ * @property string $ip_address
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\User $user
  * @method static \Illuminate\Database\Eloquent\Builder|UserActivity failed()
  * @method static \Illuminate\Database\Eloquent\Builder|UserActivity forLastDays(int $days)
  * @method static \Illuminate\Database\Eloquent\Builder|UserActivity forLastMonth()
@@ -60,6 +94,14 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|UserActivity query()
  * @method static \Illuminate\Database\Eloquent\Builder|UserActivity successful()
  * @method static \Illuminate\Database\Eloquent\Builder|UserActivity toDate(\Illuminate\Support\Carbon $to)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserActivity whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserActivity whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserActivity whereIpAddress($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserActivity whereMethod($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserActivity whereResponseCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserActivity whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserActivity whereUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserActivity whereUserId($value)
  */
 	class UserActivity extends \Eloquent {}
 }

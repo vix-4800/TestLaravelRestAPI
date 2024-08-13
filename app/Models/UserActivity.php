@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\RequestMethod;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -30,14 +31,13 @@ class UserActivity extends Model
     ];
 
     /**
-     * Sets the method attribute for the UserActivity model.
+     * Get the attributes that should be cast.
      *
-     * @param  string  $value  The method to be set.
+     * @var array<string, string>
      */
-    public function setMethodAttribute(string $value): void
-    {
-        $this->attributes['method'] = strtoupper($value);
-    }
+    protected $casts = [
+        'method' => RequestMethod::class,
+    ];
 
     /**
      * Get the user for the activity.

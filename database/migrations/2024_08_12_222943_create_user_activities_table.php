@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\RequestMethod;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -17,7 +18,7 @@ return new class extends Migration
 
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->string('url');
-            $table->string('method');
+            $table->enum('method', RequestMethod::values());
             $table->integer('response_code');
             $table->ipAddress('ip_address');
 

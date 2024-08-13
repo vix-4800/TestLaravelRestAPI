@@ -81,7 +81,7 @@ class UserActivity extends Command implements PromptsForMissingInput
             foreach ($activities as $activity) {
                 fputcsv($handle, [
                     $activity['url'],
-                    $activity['method'],
+                    $activity['method']->value,
                     $activity['response_code'],
                     $activity['ip_address'],
                     $activity['created_at'],
@@ -91,7 +91,7 @@ class UserActivity extends Command implements PromptsForMissingInput
             foreach ($activities as $activity) {
                 fputcsv($handle, [
                     $activity->url,
-                    $activity->method,
+                    $activity->method->value,
                     $activity->response_code,
                     $activity->ip_address,
                     $activity->created_at->format('Y-m-d H:i:s'),
