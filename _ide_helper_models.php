@@ -85,9 +85,13 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder|UserActivity forLastDays(int $days)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserActivity forLastMonth()
+ * @method static \Illuminate\Database\Eloquent\Builder|UserActivity fromDate(\Illuminate\Support\Carbon $from)
  * @method static \Illuminate\Database\Eloquent\Builder|UserActivity newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|UserActivity newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|UserActivity query()
+ * @method static \Illuminate\Database\Eloquent\Builder|UserActivity toDate(\Illuminate\Support\Carbon $to)
  * @method static \Illuminate\Database\Eloquent\Builder|UserActivity whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|UserActivity whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|UserActivity whereIpAddress($value)
