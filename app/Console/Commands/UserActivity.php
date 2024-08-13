@@ -77,14 +77,26 @@ class UserActivity extends Command implements PromptsForMissingInput
 
         fputcsv($handle, ['Url', 'Method', 'Response Code', 'IP Address', 'Reported On']);
 
-        foreach ($activities as $activity) {
-            fputcsv($handle, [
-                $activity->url,
-                $activity->method,
-                $activity->response_code,
-                $activity->ip_address,
-                $activity->created_at->format('Y-m-d H:i:s'),
-            ]);
+        if (is_array($activities)) {
+            foreach ($activities as $activity) {
+                fputcsv($handle, [
+                    $activity['url'],
+                    $activity['method'],
+                    $activity['response_code'],
+                    $activity['ip_address'],
+                    $activity['created_at'],
+                ]);
+            }
+        } else {
+            foreach ($activities as $activity) {
+                fputcsv($handle, [
+                    $activity->url,
+                    $activity->method,
+                    $activity->response_code,
+                    $activity->ip_address,
+                    $activity->created_at->format('Y-m-d H:i:s'),
+                ]);
+            }
         }
 
         fclose($handle);
